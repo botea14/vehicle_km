@@ -36,4 +36,4 @@ The resource is designed for seamless integration, automatically creating and ma
 
 🔹 Perfect for adding a realistic odometer system to your server! 🚀
 
-[Discord Server](discord.gg/8mMpPwh3QF)
+[Discord Server](https://discord.gg/8mMpPwh3QF)
