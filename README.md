@@ -2,7 +2,7 @@
 ![image](https://github.com/user-attachments/assets/21550c8e-f1ae-49cb-b062-df0e6f234f94)
 
 ## Description
-This free resource accurately tracks and stores the total kilometers driven for each vehicle based on its plate number. It also features a clean and stylish display under the minimap, showing the vehicle’s plate number and total KM driven.
+This free FiveM resource accurately tracks and stores the total kilometers driven for each vehicle based on its plate number. It also features a clean and stylish display under the minimap, showing the vehicle’s plate number and total KM driven.
 
 The resource is designed for seamless integration, automatically creating and managing a dedicated database table (vehicle_km) on first startup. It ensures efficient tracking without interfering with existing vehicle data.
 
