@@ -18,16 +18,16 @@ The resource is designed for seamless integration, automatically creating and ma
 ✅ Easily Customizable – Edit the server-side script to integrate with an existing vehicle database if required.
 
 ## Dependencies
-🔹 oxmysql – For database management.
+🔹 **oxmysql** – For database management.
 
-🔹 baseevents – To detect vehicle usage events.
+🔹 **baseevents** – To detect vehicle usage events.
 
 ## Installation
-1️⃣ Ensure oxmysql and baseevents are installed on your server.
+1️⃣ Ensure **oxmysql** and **baseevents** are installed on your server.
 
-2️⃣ Drag and drop the resource into your resources folder.
+2️⃣ Drag and drop the resource into your **resources** folder.
 
-3️⃣ Add ensure vehicle_km to your server.cfg.
+3️⃣ Add ensure **vehicle_km** to your **server.cfg**.
 
 4️⃣ Start your server – the database table will be created automatically!
 
