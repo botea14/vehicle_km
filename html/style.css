@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    font-family: Arial, sans-serif;
+}
+
+#hud-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+    color: #fff;
+    width: 250px;
+    font-size: 18px;
+    text-align: center;
+    display: none;
+}
+
+#km, #plate {
+    margin-bottom: 10px;
+}
+
+#km-text, #plate-text {
+    font-weight: bold;
+}

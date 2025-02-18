@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: transparent;
+            margin: 0;
+            padding: 0;
+        }
+        #dashboard {
+            position: fixed;
+            bottom: 0.7%;
+            left: 1.5%;
+            min-width: 260px;  /* Increased width for the single row */
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            padding: 5px;
+			display: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Align content on the same row */
+        }
+        #dashboard p {
+            margin: 0;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div id="dashboard">
+        <p id="plate">--</p>
+        <p id="km">KM: --</p>
+    </div>
+
+    <script>
+        window.addEventListener('message', function(event) {
+            if (event.data.type === 'updateKmDisplay') {
+                document.getElementById('plate').textContent = event.data.plate;
+                document.getElementById('km').textContent = event.data.km + ' KM';
+            }
+
+            if (event.data.type === 'show') {
+                document.getElementById('dashboard').style.display = 'flex';
+            } else if (event.data.type === 'hide') {
+                document.getElementById('dashboard').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
