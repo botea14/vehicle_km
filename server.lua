@@ -16,7 +16,8 @@ AddEventHandler('checkVehicleAndDisplayDashboard', function(plate)
         ['@plate'] = plate
     }, function(result)
         if result[1] then
-            local realKM = math.floor((result[1].km / 100)) / 10
+            local km = result[1].km
+			local realKM = km / 1000
             TriggerClientEvent('updateVehicleKmDisplay', _source, plate, realKM)
         else
             MySQL.Async.execute('INSERT INTO vehicle_km (plate, km) VALUES (@plate, 0)', {
@@ -39,7 +40,8 @@ AddEventHandler('updateCarKm', function(plate, distance)
             ['@plate'] = plate
         }, function(updatedDistance)
             if updatedDistance then
-                local realKM = math.floor((updatedDistance / 100)) / 10
+                local km = updatedDistance
+				local realKM = km / 1000
                 TriggerClientEvent('updateVehicleKmDisplay', _source, plate, realKM)
             end
         end)

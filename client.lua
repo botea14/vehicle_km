@@ -1,80 +1,90 @@
 local lastPosition = vector3(0, 0, 0)
 local currentVehicle = nil
 local vehiclePlate = nil
-local isDriver = false
+local needToDisplay = false
+local distanceToUpdate = 0
+local vehicleCurrentKm = 0
 
-function IsPlayerDriver(vehicle)
+-- Function to check if player is the driver
+local function IsPlayerDriver(vehicle)
     return GetPedInVehicleSeat(vehicle, -1) == PlayerPedId()
 end
 
+-- Detect when the player enters/exits a vehicle
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(0) 
+        local ped = PlayerPedId()
+        local vehicle = GetVehiclePedIsIn(ped, false)
 
-        if IsPedInAnyVehicle(PlayerPedId(), false) then
-            local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
-
-            if IsPlayerDriver(vehicle) then
-                if vehicle ~= currentVehicle then
-                    currentVehicle = vehicle
-                    vehiclePlate = GetVehicleNumberPlateText(vehicle)
-                    lastPosition = GetEntityCoords(vehicle)
-
-                    TriggerServerEvent('checkVehicleAndDisplayDashboard', vehiclePlate)
-                end
+        if vehicle and vehicle ~= 0 and IsPlayerDriver(vehicle) then
+            if vehicle ~= currentVehicle then
+                currentVehicle = vehicle
+                vehiclePlate = GetVehicleNumberPlateText(vehicle)
+                lastPosition = GetEntityCoords(vehicle)
+                needToDisplay = false
+                TriggerServerEvent('checkVehicleAndDisplayDashboard', vehiclePlate)
             end
-        end
-    end
-end)
+        elseif currentVehicle then
 
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
+            if distanceToUpdate >= 1 then
+                TriggerServerEvent('updateCarKm', vehiclePlate, math.floor(distanceToUpdate))
+                distanceToUpdate = 0
+            end
 
-        if currentVehicle ~= nil and not IsPedInAnyVehicle(PlayerPedId(), false) then
-            SendNUIMessage({ type = 'hide' })
-            
+            -- Reset vehicle data
             currentVehicle = nil
             vehiclePlate = nil
+            needToDisplay = false
+            -- Ensure UI is hidden on exit
+			Citizen.Wait(500)
+            SendNUIMessage({ type = 'hide' })
         end
+
+        Citizen.Wait(100)
     end
 end)
 
+-- Update vehicle kilometers
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(1000) 
-        if IsPedInAnyVehicle(PlayerPedId(), false) then
-            local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
-            if IsPlayerDriver(vehicle) then
+        if currentVehicle then
+            local currentPos = GetEntityCoords(currentVehicle)
+            local distance = #(currentPos - lastPosition)
 
-                local currentPos = GetEntityCoords(vehicle)
-                local distance = #(currentPos - lastPosition)
+            if distance > 1.0 then
+                vehicleCurrentKm = vehicleCurrentKm + distance
+                distanceToUpdate = distanceToUpdate + distance
 
-                if distance > 1.0 then
-                    TriggerServerEvent('updateCarKm', vehiclePlate, math.floor(distance))
+                -- Update UI every 500 meters
+                if distanceToUpdate >= 100 then
+                    TriggerServerEvent('updateCarKm', vehiclePlate, math.floor(distanceToUpdate))
+                    distanceToUpdate = 0
+				end
 
-                    lastPosition = currentPos
 
-                end
+                lastPosition = currentPos
             end
         end
+
+        Citizen.Wait(1000) -- Updates every second
     end
 end)
 
+-- Event to update the vehicle's kilometers on the dashboard
 RegisterNetEvent('updateVehicleKmDisplay')
 AddEventHandler('updateVehicleKmDisplay', function(plate, km)
-    km = string.format("%.1f", km)
+    needToDisplay = true
+    vehicleCurrentKm = tonumber(km) * 1000 -- Ensure proper type conversion
+	local displayKm = string.format("%.1f", vehicleCurrentKm / 1000)
     SendNUIMessage({
         type = 'updateKmDisplay',
         plate = plate,
-        km = km
+        km = displayKm
     })
-
-    SendNUIMessage({
-        type = 'show'
-    })
+    SendNUIMessage({ type = 'show' })
 end)
 
+-- Event to hide the dashboard if vehicle does not exist in the database
 RegisterNetEvent('hideVehicleDashboard')
 AddEventHandler('hideVehicleDashboard', function()
     SendNUIMessage({ type = 'hide' })
