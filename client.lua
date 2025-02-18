@@ -51,7 +51,7 @@ Citizen.CreateThread(function()
             local currentPos = GetEntityCoords(currentVehicle)
             local distance = #(currentPos - lastPosition)
 
-            if distance > 1.0 then
+            if distance > 0.1 then
                 vehicleCurrentKm = vehicleCurrentKm + distance
                 distanceToUpdate = distanceToUpdate + distance
 
