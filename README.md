@@ -1,4 +1,6 @@
 # [FREE] [Standalone] Vehicle Dashboard - KM Counter
+![image](https://github.com/user-attachments/assets/21550c8e-f1ae-49cb-b062-df0e6f234f94)
+
 ## Description
 This free resource accurately tracks and stores the total kilometers driven for each vehicle based on its plate number. It also features a clean and stylish display under the minimap, showing the vehicle’s plate number and total KM driven.
 
