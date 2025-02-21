@@ -1,7 +1,7 @@
 fx_version 'cerulean'
 game 'gta5'
 
-author 'DriftV'
+author 'DriftX'
 description 'Vehicle Dashboard - KM Count'
 version '1.0.0'
 
@@ -22,6 +22,11 @@ files {
     'html/index.html',
     'html/style.css',
     'html/script.js'
+}
+
+escrow_ignore {
+  "*.lua",
+  "**/*.lua"
 }
 
 dependency 'baseevents'
