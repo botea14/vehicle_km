@@ -19,6 +19,8 @@ The resource is designed for seamless integration, automatically creating and ma
 
 ✅ Easily Customizable – Edit the server-side script to integrate with an existing vehicle database if required.
 
+![image](https://github.com/user-attachments/assets/7db5a278-593f-415f-8ca6-5d1c174ea292)
+
 ## Dependencies
 🔹 **oxmysql** – For database management.
 
@@ -32,8 +34,6 @@ The resource is designed for seamless integration, automatically creating and ma
 3️⃣ Add ensure **vehicle_km** to your **server.cfg**.
 
 4️⃣ Start your server – the database table will be created automatically!
-
-![image](https://github.com/user-attachments/assets/7db5a278-593f-415f-8ca6-5d1c174ea292)
 
 🔹 Perfect for adding a realistic odometer system to your server! 🚀
 
